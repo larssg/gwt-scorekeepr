@@ -1,4 +1,4 @@
-package dk.scorekeepr.server;
+package dk.scorekeeper.server;
 
 // Copyright (c) 2006 Damien Miller <djm@mindrot.org>
 //

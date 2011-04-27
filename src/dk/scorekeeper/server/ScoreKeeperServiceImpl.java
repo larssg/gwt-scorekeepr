@@ -7,7 +7,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import dk.scorekeeper.client.service.ScoreKeeperService;
 import dk.scorekeeper.shared.entities.Game;
 import dk.scorekeeper.shared.entities.User;
-import dk.scorekeepr.server.BCrypt;
 
 /**
  * The server side implementation of the RPC service.
