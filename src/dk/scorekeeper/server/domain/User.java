@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import dk.scorekeeper.server.BCrypt;
+
 @Entity
 public class User {
 	public static final EntityManager entityManager() {
@@ -81,6 +83,13 @@ public class User {
 		return id;
 	}
 
+	/**
+	 * Always returns an empty string.
+	 */
+	public String getPassword() {
+		return null;
+	}
+
 	public String getPasswordHash() {
 		return passwordHash;
 	}
@@ -123,6 +132,20 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * Generates and sets the password hash.
+	 * @param password
+	 */
+	public void setPassword(String password) {
+		if (password == null || password == "") {
+			return;
+		}
+
+		String salt = BCrypt.gensalt();
+		String hash = BCrypt.hashpw(password, salt);
+		setPasswordHash(hash);
 	}
 
 	public void setPasswordHash(String passwordHash) {

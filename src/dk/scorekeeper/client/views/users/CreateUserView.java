@@ -81,6 +81,7 @@ public class CreateUserView extends Composite {
 			user.setUserName(userName.getText());
 			user.setFullName(fullName.getText());
 			user.setEmail(email.getText());
+			user.setPassword(password.getText());
 
 			saveButton.setEnabled(false);
 

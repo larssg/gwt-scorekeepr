@@ -10,8 +10,10 @@ public interface UserProxy extends EntityProxy {
 	String getEmail();
 	String getFullName();
 	Long getId();
+	String getPassword();
 	String getUserName();
 	void setEmail(String email);
 	void setFullName(String fullName);
+	void setPassword(String password);
 	void setUserName(String userName);
 }
