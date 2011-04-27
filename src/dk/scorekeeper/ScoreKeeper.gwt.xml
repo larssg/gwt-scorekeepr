@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='scorekeeper'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+
+  <!-- Inherit the default GWT style sheet.  You can change       -->
+  <!-- the theme of your GWT application by uncommenting          -->
+  <!-- any one of the following lines.                            -->
+  <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+
+  <!-- Other module inherits                                      -->
+  <inherits name="com.google.gwt.resources.Resources" />
+  <inherits name="com.googlecode.objectify.Objectify" />
+
+  <!-- Inherits for GWT Platform								  -->  
+  <inherits name="com.google.gwt.uibinder.UiBinder" />
+  <inherits name="com.google.gwt.inject.Inject" />
+  <inherits name="com.gwtplatform.mvp.Mvp" /> 
+
+  <define-configuration-property name="gin.ginjector" is-multi-valued="false" />
+  <set-configuration-property name="gin.ginjector" value="dk.scorekeeper.client.gin.ClientGinjector" /> 
+    
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='dk.scorekeeper.client.ScoreKeeper'/>
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+  <source path='shared'/>
+
+  <set-configuration-property name="CssResource.obfuscationPrefix" value="empty" />
+  <set-configuration-property name="gwt.elideTypeNamesFromRPC" value="true" />
+</module>

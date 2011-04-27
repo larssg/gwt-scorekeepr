@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.details {
+			border: 1px solid #eee;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+	
+		.fullName {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel styleName="{style.details}">
+		<g:InlineLabel ui:field="fullNameLabel" styleName="{style.fullName}" />
+		<g:InlineLabel ui:field="userNameLabel" />
+		<g:InlineLabel ui:field="emailLabel" />
+	</g:HTMLPanel>
+</ui:UiBinder> 

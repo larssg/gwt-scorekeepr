@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	
+	<ui:with type="dk.scorekeeper.client.resources.Resources" field="res" />
+	<g:HTMLPanel styleName="{res.grid.grid_4}">
+		<g:Label text="Username"/>
+		<g:TextBox ui:field="userName" />
+
+		<g:Label text="Password"/>
+		<g:PasswordTextBox ui:field="password" />
+
+		<g:Label text="Password (confirmation)"/>
+		<g:PasswordTextBox ui:field="passwordConfirmation" />
+
+		<g:Label text="Full name"/>
+		<g:TextBox ui:field="fullName" />
+
+		<g:Label text="E-mail"/>
+		<g:TextBox ui:field="email" />
+
+		<br />
+		<g:Button ui:field="saveButton" text="Save" />
+	</g:HTMLPanel>
+</ui:UiBinder> 

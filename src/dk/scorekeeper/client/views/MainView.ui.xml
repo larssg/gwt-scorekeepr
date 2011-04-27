@@ -1,0 +1,70 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="dk.scorekeeper.client.resources.Resources" field="res" />
+	<ui:with type="dk.scorekeeper.client.NameTokens" field="nameTokens"></ui:with>
+	
+	<ui:style>
+		.content-top {
+			background-color: #fff;
+			padding-bottom: 40px;
+		}
+	
+		.header {
+			background-color: #39c;
+			padding: 10px;
+		}
+		
+		.header h1 {
+			color: #fff;
+			margin: 0;
+		}
+		
+		.menu {
+			border-bottom: 1px solid #000;
+			margin-bottom: 20px;
+		}
+		
+		.menuLink {
+			float: left;
+			padding: 3px 10px;
+			color: #333;
+			font-weight: bold;
+			text-decoration: none;
+		}
+		
+		.footer {
+			padding-top: 20px;
+			padding-bottom: 20px;
+			color: #fff;
+		}
+		
+		.footer-right {
+			float: right;
+			text-align: right;
+		}
+	</ui:style>
+	
+	<g:FlowPanel>
+		<g:HTMLPanel styleName="{style.content-top} {res.grid.clearfix}">
+			<g:FlowPanel styleName="{res.grid.container_12} {res.grid.clearfix}">
+				<g:HTMLPanel styleName="{style.header} {res.grid.grid_12} {res.grid.alpha} {res.grid.omega}">
+					<h1>Score Keeper</h1>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.menu} {res.grid.clearfix}">
+					<g:InlineHyperlink ui:field="usersLink" targetHistoryToken="{nameTokens.getHomePage}" styleName="{style.menuLink}">Users</g:InlineHyperlink>
+					<g:InlineHyperlink ui:field="gamesLink" targetHistoryToken="{nameTokens.getGamesPage}" styleName="{style.menuLink}">Games</g:InlineHyperlink>
+				</g:HTMLPanel>
+				<g:FlowPanel ui:field="mainPanel" />
+			</g:FlowPanel>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{style.footer} {res.grid.container_12} {res.grid.clearfix}">
+			<g:HTMLPanel styleName="{style.footer-right}">
+				Credits
+			</g:HTMLPanel>
+			<g:HTMLPanel>
+				Copyright 2011 by Lars Sehested
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 
