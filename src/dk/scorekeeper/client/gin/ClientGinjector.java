@@ -1,7 +1,6 @@
 package dk.scorekeeper.client.gin;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 import com.google.inject.Provider;
@@ -17,12 +16,12 @@ import dk.scorekeeper.shared.requestfactory.ScoreKeeperRequestFactory;
 @GinModules(ClientModule.class)
 public interface ClientGinjector extends Ginjector {
 	EventBus getEventBus();
-	AsyncProvider<GamesPresenter> getGamesPresenter();
+	Provider<GamesPresenter> getGamesPresenter();
 	Provider<HomePresenter> getHomePresenter();
 	Provider<MainPagePresenter> getMainPagePresenter();
 	PlaceManager getPlaceManager();
 	ProxyFailureHandler getProxyFailureHandler();
 
 	ScoreKeeperRequestFactory getRequestFactory();
-	AsyncProvider<UsersPresenter> getUsersPresenter();
+	Provider<UsersPresenter> getUsersPresenter();
 }

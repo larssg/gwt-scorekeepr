@@ -30,5 +30,4 @@
   <source path='shared'/>
 
   <set-configuration-property name="CssResource.obfuscationPrefix" value="empty" />
-  <set-configuration-property name="gwt.elideTypeNamesFromRPC" value="true" />
 </module>

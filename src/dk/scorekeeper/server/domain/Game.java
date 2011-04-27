@@ -19,6 +19,7 @@ public class Game implements Serializable {
 		return EMF.get().createEntityManager();
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<Game> findAllGames() {
 		EntityManager em = entityManager();
 		try {

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class User {
@@ -16,6 +17,7 @@ public class User {
 		return EMF.get().createEntityManager();
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<User> findAllUsers() {
 		EntityManager em = entityManager();
 		try {
@@ -65,10 +67,12 @@ public class User {
 		this.email = email;
 	}
 
+	@NotNull
 	public String getEmail() {
 		return email;
 	}
 
+	@NotNull
 	public String getFullName() {
 		return fullName;
 	}
@@ -81,6 +85,7 @@ public class User {
 		return passwordHash;
 	}
 
+	@NotNull
 	public String getUserName() {
 		return userName;
 	}
