@@ -2,11 +2,10 @@ package dk.scorekeeper.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.gwtplatform.mvp.client.DelayedBindRegistry;
 
 import dk.scorekeeper.client.gin.ClientGinjector;
 import dk.scorekeeper.client.resources.Resources;
-import dk.scorekeeper.client.views.MainView;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -24,10 +23,13 @@ public class ScoreKeeper implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
+	@Override
 	public void onModuleLoad() {
 		injectStylesheets();
 
-		MainView mainView = new MainView(injector.getEventBus());
-		RootPanel.get().add(mainView);
+		// This is required for Gwt-Platform proxy's generator.
+		DelayedBindRegistry.bind(injector);
+
+		injector.getPlaceManager().revealCurrentPlace();
 	}
 }

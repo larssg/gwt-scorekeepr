@@ -7,13 +7,13 @@
   
   <!-- Servlets -->
   <servlet>
-    <servlet-name>serviceServlet</servlet-name>
-    <servlet-class>dk.scorekeeper.server.ScoreKeeperServiceImpl</servlet-class>
+    <servlet-name>requestFactoryServlet</servlet-name>
+    <servlet-class>com.google.gwt.requestfactory.server.RequestFactoryServlet</servlet-class>
   </servlet>
-  
+
   <servlet-mapping>
-    <servlet-name>serviceServlet</servlet-name>
-    <url-pattern>/scorekeeper/service</url-pattern>
+    <servlet-name>requestFactoryServlet</servlet-name>
+    <url-pattern>/gwtRequest</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

@@ -14,7 +14,7 @@ import dk.scorekeeper.client.events.UserAddedEvent;
 import dk.scorekeeper.client.events.UserAddedEventHandler;
 import dk.scorekeeper.client.events.UsersLoadedEvent;
 import dk.scorekeeper.client.events.UsersLoadedEventHandler;
-import dk.scorekeeper.shared.entities.User;
+import dk.scorekeeper.shared.domain.proxy.UserProxy;
 
 public class UserListView extends Composite {
 
@@ -22,7 +22,7 @@ public class UserListView extends Composite {
 	}
 
 	private static UserListViewUiBinder uiBinder = GWT
-			.create(UserListViewUiBinder.class);
+	.create(UserListViewUiBinder.class);
 
 	private final EventBus eventBus;
 
@@ -37,18 +37,18 @@ public class UserListView extends Composite {
 		bindEvents();
 	}
 
-	protected void addUser(User user) {
+	protected void addUser(UserProxy user) {
 		userDetailList.add(new UserDetailView(user));
 	}
 
 	private void bindEvents() {
 		eventBus.addHandler(UsersLoadedEvent.TYPE,
 				new UsersLoadedEventHandler() {
-					@Override
-					public void onEvent(UsersLoadedEvent event) {
-						setUsers(event.getUsers());
-					}
-				});
+			@Override
+			public void onEvent(UsersLoadedEvent event) {
+				setUsers(event.getUsers());
+			}
+		});
 
 		eventBus.addHandler(UserAddedEvent.TYPE, new UserAddedEventHandler() {
 			@Override
@@ -58,9 +58,9 @@ public class UserListView extends Composite {
 		});
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(List<UserProxy> users) {
 		userDetailList.clear();
-		for (User user : users) {
+		for (UserProxy user : users) {
 			userDetailList.add(new UserDetailView(user));
 		}
 	}

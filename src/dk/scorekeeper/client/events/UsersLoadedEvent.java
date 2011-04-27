@@ -1,18 +1,18 @@
 package dk.scorekeeper.client.events;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import dk.scorekeeper.shared.entities.User;
+import dk.scorekeeper.shared.domain.proxy.UserProxy;
 
 public class UsersLoadedEvent extends GwtEvent<UsersLoadedEventHandler> {
 
 	public static Type<UsersLoadedEventHandler> TYPE = new Type<UsersLoadedEventHandler>();
 
-	private final ArrayList<User> users;
+	private final List<UserProxy> users;
 
-	public UsersLoadedEvent(ArrayList<User> users) {
+	public UsersLoadedEvent(List<UserProxy> users) {
 		this.users = users;
 	}
 
@@ -26,7 +26,7 @@ public class UsersLoadedEvent extends GwtEvent<UsersLoadedEventHandler> {
 		return TYPE;
 	}
 
-	public ArrayList<User> getUsers() {
+	public List<UserProxy> getUsers() {
 		return users;
 	}
 }

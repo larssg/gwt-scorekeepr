@@ -43,19 +43,32 @@
 			float: right;
 			text-align: right;
 		}
+		
+		.loading {
+			position: absolute;
+			top: 0;
+			left: auto;
+			background-color: yellow;
+			font-weight: bold;
+		}
 	</ui:style>
 	
-	<g:FlowPanel>
+	<g:HTMLPanel>
+		<div ui:field="loadingMessage" class="{style.loading}">
+          Loading...
+        </div>
+	
 		<g:HTMLPanel styleName="{style.content-top} {res.grid.clearfix}">
 			<g:FlowPanel styleName="{res.grid.container_12} {res.grid.clearfix}">
 				<g:HTMLPanel styleName="{style.header} {res.grid.grid_12} {res.grid.alpha} {res.grid.omega}">
 					<h1>Score Keeper</h1>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.menu} {res.grid.clearfix}">
-					<g:InlineHyperlink ui:field="usersLink" targetHistoryToken="{nameTokens.getHomePage}" styleName="{style.menuLink}">Users</g:InlineHyperlink>
+					<g:InlineHyperlink ui:field="homeLink" targetHistoryToken="{nameTokens.getHomePage}" styleName="{style.menuLink}">Home</g:InlineHyperlink>
 					<g:InlineHyperlink ui:field="gamesLink" targetHistoryToken="{nameTokens.getGamesPage}" styleName="{style.menuLink}">Games</g:InlineHyperlink>
+					<g:InlineHyperlink ui:field="usersLink" targetHistoryToken="{nameTokens.getUsersPage}" styleName="{style.menuLink}">Users</g:InlineHyperlink>
 				</g:HTMLPanel>
-				<g:FlowPanel ui:field="mainPanel" />
+				<g:FlowPanel ui:field="mainContentPanel" />
 			</g:FlowPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.footer} {res.grid.container_12} {res.grid.clearfix}">
@@ -66,5 +79,5 @@
 				Copyright 2011 by Lars Sehested
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-	</g:FlowPanel>
+	</g:HTMLPanel>
 </ui:UiBinder> 

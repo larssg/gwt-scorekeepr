@@ -1,0 +1,16 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.home p {
+			margin-bottom: 1em;
+		}
+	</ui:style>
+	<g:HTMLPanel styleName="{style.home}">
+		<p>
+			<strong>Welcome to Score Keeper.</strong>
+		</p>
+		
+		<p>A work in progress, so beware: here be dragons.</p>
+	</g:HTMLPanel>
+</ui:UiBinder> 

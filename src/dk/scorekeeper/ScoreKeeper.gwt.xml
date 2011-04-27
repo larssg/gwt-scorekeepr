@@ -12,7 +12,7 @@
 
   <!-- Other module inherits                                      -->
   <inherits name="com.google.gwt.resources.Resources" />
-  <inherits name="com.googlecode.objectify.Objectify" />
+  <inherits name='com.google.gwt.requestfactory.RequestFactory'/>
 
   <!-- Inherits for GWT Platform								  -->  
   <inherits name="com.google.gwt.uibinder.UiBinder" />
