@@ -16,8 +16,12 @@
 		}
 		
 		.header h1 {
-			color: #fff;
 			margin: 0;
+		}
+		
+		.title {
+			color: #fff;
+			text-decoration: none;
 		}
 		
 		.menu {
@@ -61,7 +65,9 @@
 		<g:HTMLPanel styleName="{style.content-top} {res.grid.clearfix}">
 			<g:FlowPanel styleName="{res.grid.container_12} {res.grid.clearfix}">
 				<g:HTMLPanel styleName="{style.header} {res.grid.grid_12} {res.grid.alpha} {res.grid.omega}">
-					<h1>Score Keeper</h1>
+					<h1>
+						<g:InlineHyperlink targetHistoryToken="{nameTokens.getHomePage}" styleName="{style.title}">Score Keeper</g:InlineHyperlink>
+					</h1>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.menu} {res.grid.clearfix}">
 					<g:InlineHyperlink ui:field="homeLink" targetHistoryToken="{nameTokens.getHomePage}" styleName="{style.menuLink}">Home</g:InlineHyperlink>
