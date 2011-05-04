@@ -1,3 +1,4 @@
+// $codepro.audit.disable largeNumberOfMethods, methodNamingConvention
 package dk.scorekeeper.client.resources;
 
 import com.google.gwt.resources.client.CssResource;

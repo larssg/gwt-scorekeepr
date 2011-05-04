@@ -1,15 +1,14 @@
 package dk.scorekeeper.shared.domain.proxy;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 import dk.scorekeeper.server.domain.User;
+import dk.scorekeeper.server.service.locator.ObjectifyLocator;
 
-@ProxyFor(User.class)
-public interface UserProxy extends EntityProxy {
+@ProxyFor(value = User.class, locator = ObjectifyLocator.class)
+public interface UserProxy extends DatastoreObjectProxy {
 	String getEmail();
 	String getFullName();
-	Long getId();
 	String getPassword();
 	String getUserName();
 	void setEmail(String email);

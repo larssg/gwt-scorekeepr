@@ -6,8 +6,6 @@ package dk.scorekeeper.client.views.users;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -17,6 +15,8 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.web.bindery.requestfactory.shared.Receiver;
+import com.google.web.bindery.requestfactory.shared.Request;
 
 import dk.scorekeeper.client.events.UserAddedEvent;
 import dk.scorekeeper.shared.domain.proxy.UserProxy;
@@ -87,10 +87,10 @@ public class CreateUserView extends Composite {
 
 			eventBus.fireEvent(new UserAddedEvent(user));
 
-			Request<Void> createReq = request.persist().using(user);
-			createReq.fire(new Receiver<Void>() {
+			Request<UserProxy> createReq = request.saveAndReturn(user);
+			createReq.fire(new Receiver<UserProxy>() {
 				@Override
-				public void onSuccess(Void response) {
+				public void onSuccess(UserProxy user) {
 					clear();
 					saveButton.setEnabled(true);
 				}

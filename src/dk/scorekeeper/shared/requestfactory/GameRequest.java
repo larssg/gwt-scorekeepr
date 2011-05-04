@@ -1,13 +1,17 @@
 package dk.scorekeeper.shared.requestfactory;
 
-import com.google.gwt.requestfactory.shared.InstanceRequest;
-import com.google.gwt.requestfactory.shared.RequestContext;
-import com.google.gwt.requestfactory.shared.Service;
+import java.util.List;
 
-import dk.scorekeeper.server.domain.Game;
+import com.google.web.bindery.requestfactory.shared.Request;
+import com.google.web.bindery.requestfactory.shared.RequestContext;
+import com.google.web.bindery.requestfactory.shared.Service;
+
+import dk.scorekeeper.server.service.GameDao;
+import dk.scorekeeper.server.service.locator.DaoServiceLocator;
 import dk.scorekeeper.shared.domain.proxy.GameProxy;
 
-@Service(Game.class)
+@Service(value = GameDao.class, locator = DaoServiceLocator.class)
 public interface GameRequest extends RequestContext {
-	InstanceRequest<GameProxy, Void> persist();
+	Request<List<GameProxy>> listAll();
+	Request<GameProxy> saveAndReturn(GameProxy game);
 }

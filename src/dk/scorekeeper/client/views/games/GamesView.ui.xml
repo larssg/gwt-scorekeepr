@@ -1,17 +1,21 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:games="urn:import:dk.scorekeeper.client.views.games">
 
 	<ui:with type="dk.scorekeeper.client.resources.Resources" field="res" />
 
 	<ui:style>
 		
 	</ui:style>
-	<g:HTMLPanel styleName="{res.grid.grid_4}">
-		<g:Label text="Name"/>
-		<g:TextBox ui:field="name" />
-
-		<br />
-		<g:Button ui:field="saveButton" text="Save" />
+	<g:HTMLPanel>
+		<g:HTMLPanel styleName="{res.grid.grid_4}">
+			<g:Label text="Name"/>
+			<g:TextBox ui:field="name" />
+	
+			<br />
+			<g:Button ui:field="saveButton" text="Save" />
+		</g:HTMLPanel>
+		<games:GameListView ui:field="listView" />
 	</g:HTMLPanel>
 </ui:UiBinder> 

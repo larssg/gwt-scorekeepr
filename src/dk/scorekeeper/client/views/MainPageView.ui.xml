@@ -15,15 +15,6 @@
 			padding: 10px;
 		}
 		
-		.header h1 {
-			margin: 0;
-		}
-		
-		.title {
-			color: #fff;
-			text-decoration: none;
-		}
-		
 		.menu {
 			border-bottom: 1px solid #000;
 			margin-bottom: 20px;
@@ -49,25 +40,22 @@
 		}
 		
 		.loading {
-			position: absolute;
-			top: 0;
-			left: auto;
+			position: fixed;
+			top: 0px;
+			margin-left: 50%;
 			background-color: yellow;
 			font-weight: bold;
+			padding: 3px;
 		}
 	</ui:style>
 	
 	<g:HTMLPanel>
-		<div ui:field="loadingMessage" class="{style.loading}">
-          Loading...
-        </div>
+		<g:HTMLPanel ui:field="notification" styleName="{style.loading}" visible="false">Loading...</g:HTMLPanel>
 	
 		<g:HTMLPanel styleName="{style.content-top} {res.grid.clearfix}">
 			<g:FlowPanel styleName="{res.grid.container_12} {res.grid.clearfix}">
 				<g:HTMLPanel styleName="{style.header} {res.grid.grid_12} {res.grid.alpha} {res.grid.omega}">
-					<h1>
-						<g:InlineHyperlink targetHistoryToken="{nameTokens.getHomePage}" styleName="{style.title}">Score Keeper</g:InlineHyperlink>
-					</h1>
+					<g:Image resource="{res.logo}" />
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.menu} {res.grid.clearfix}">
 					<g:InlineHyperlink ui:field="homeLink" targetHistoryToken="{nameTokens.getHomePage}" styleName="{style.menuLink}">Home</g:InlineHyperlink>

@@ -12,7 +12,7 @@
 
   <!-- Other module inherits                                      -->
   <inherits name="com.google.gwt.resources.Resources" />
-  <inherits name='com.google.gwt.requestfactory.RequestFactory'/>
+  <inherits name='com.google.web.bindery.requestfactory.RequestFactory'/>
 
   <!-- Inherits for GWT Platform								  -->  
   <inherits name="com.google.gwt.uibinder.UiBinder" />
@@ -28,6 +28,8 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
+  
+  <set-configuration-property name="UiBinder.useSafeHtmlTemplates" value="true" />
 
   <set-configuration-property name="CssResource.obfuscationPrefix" value="empty" />
 </module>

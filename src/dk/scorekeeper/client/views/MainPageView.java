@@ -1,11 +1,10 @@
 package dk.scorekeeper.client.views;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineHyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
@@ -21,7 +20,7 @@ public class MainPageView extends ViewImpl implements MyView {
 	private static MainPageViewUiBinder uiBinder = GWT.create(MainPageViewUiBinder.class);
 
 	@UiField
-	Element loadingMessage;
+	HTMLPanel notification;
 
 	@UiField
 	InlineHyperlink gamesLink;
@@ -62,7 +61,6 @@ public class MainPageView extends ViewImpl implements MyView {
 
 	@Override
 	public void showLoading(boolean visible) {
-		loadingMessage.getStyle().setVisibility(
-				visible ? Visibility.VISIBLE : Visibility.HIDDEN);
+		notification.setVisible(visible);
 	}
 }

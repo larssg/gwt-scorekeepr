@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>requestFactoryServlet</servlet-name>
-    <servlet-class>com.google.gwt.requestfactory.server.RequestFactoryServlet</servlet-class>
+    <servlet-class>com.google.web.bindery.requestfactory.server.RequestFactoryServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

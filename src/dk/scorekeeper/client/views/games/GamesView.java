@@ -1,9 +1,9 @@
 package dk.scorekeeper.client.views.games;
 
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -11,6 +11,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.web.bindery.requestfactory.shared.Receiver;
+import com.google.web.bindery.requestfactory.shared.Request;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import dk.scorekeeper.client.presenter.GamesPresenter.MyView;
@@ -30,6 +32,9 @@ public class GamesView extends ViewImpl implements MyView {
 
 	@UiField
 	Button saveButton;
+
+	@UiField
+	GameListView listView;
 
 	private final Widget widget;
 
@@ -59,13 +64,18 @@ public class GamesView extends ViewImpl implements MyView {
 
 		saveButton.setEnabled(false);
 
-		Request<Void> createReq = request.persist().using(game);
-		createReq.fire(new Receiver<Void>() {
+		Request<GameProxy> createReq = request.saveAndReturn(game);
+		createReq.fire(new Receiver<GameProxy>() {
 			@Override
-			public void onSuccess(Void response) {
+			public void onSuccess(GameProxy response) {
 				clear();
 				saveButton.setEnabled(true);
 			}
 		});
+	}
+
+	@Override
+	public void setGames(List<GameProxy> games) {
+		listView.setGames(games);
 	}
 }

@@ -2,16 +2,16 @@ package dk.scorekeeper.shared.requestfactory;
 
 import java.util.List;
 
-import com.google.gwt.requestfactory.shared.InstanceRequest;
-import com.google.gwt.requestfactory.shared.Request;
-import com.google.gwt.requestfactory.shared.RequestContext;
-import com.google.gwt.requestfactory.shared.Service;
+import com.google.web.bindery.requestfactory.shared.Request;
+import com.google.web.bindery.requestfactory.shared.RequestContext;
+import com.google.web.bindery.requestfactory.shared.Service;
 
-import dk.scorekeeper.server.domain.User;
+import dk.scorekeeper.server.service.UserDao;
+import dk.scorekeeper.server.service.locator.DaoServiceLocator;
 import dk.scorekeeper.shared.domain.proxy.UserProxy;
 
-@Service(User.class)
+@Service(value = UserDao.class, locator = DaoServiceLocator.class)
 public interface UserRequest extends RequestContext {
-	Request<List<UserProxy>> findAllUsers();
-	InstanceRequest<UserProxy, Void> persist();
+	Request<List<UserProxy>> listAll();
+	Request<UserProxy> saveAndReturn(UserProxy user);
 }

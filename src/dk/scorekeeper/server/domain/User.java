@@ -1,63 +1,22 @@
 package dk.scorekeeper.server.domain;
 
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+
+import com.googlecode.objectify.annotation.Indexed;
+import com.googlecode.objectify.annotation.Unindexed;
 
 import dk.scorekeeper.server.BCrypt;
 
-@Entity
-public class User {
-	public static final EntityManager entityManager() {
-		return EMF.get().createEntityManager();
-	}
-
-	@SuppressWarnings("unchecked")
-	public static List<User> findAllUsers() {
-		EntityManager em = entityManager();
-		try {
-			List<User> users = em.createQuery("select u from User u").getResultList();
-			users.size();
-			return users;
-		} finally {
-			em.close();
-		}
-	}
-
-	public static User findUser(Long id) {
-		if (id == null) {
-			return null;
-		}
-		EntityManager em = entityManager();
-		try {
-			User user = em.find(User.class, id);
-			return user;
-		} finally {
-			em.close();
-		}
-	}
-
+@Unindexed
+public class User extends DatastoreObject {
+	@Indexed
 	private String email;
 
 	private String fullName;
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String passwordHash;
 
-	@Version
-	private Long version;
-
-	private transient String passwordHash;
-
+	@Indexed
 	private String userName;
 
 	public User() {
@@ -79,13 +38,6 @@ public class User {
 		return fullName;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Always returns an empty string.
-	 */
 	public String getPassword() {
 		return null;
 	}
@@ -99,29 +51,6 @@ public class User {
 		return userName;
 	}
 
-	public Long getVersion() {
-		return version;
-	}
-
-	public void persist() {
-		EntityManager em = entityManager();
-		try {
-			em.persist(this);
-		} finally {
-			em.close();
-		}
-	}
-
-	public void remove() {
-		EntityManager em = entityManager();
-		try {
-			User attached = em.find(User.class, id);
-			em.remove(attached);
-		} finally {
-			em.close();
-		}
-	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -130,16 +59,8 @@ public class User {
 		this.fullName = fullName;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * Generates and sets the password hash.
-	 * @param password
-	 */
 	public void setPassword(String password) {
-		if (password == null || password == "") {
+		if (password == null || password.equals("")) {
 			return;
 		}
 
@@ -154,9 +75,5 @@ public class User {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 }

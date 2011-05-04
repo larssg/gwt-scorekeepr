@@ -1,8 +1,9 @@
 package dk.scorekeeper.shared.requestfactory;
 
-import com.google.gwt.requestfactory.shared.RequestFactory;
+import com.google.web.bindery.requestfactory.shared.RequestFactory;
 
 public interface ScoreKeeperRequestFactory extends RequestFactory {
 	GameRequest gameRequest();
+	MatchRequest matchRequest();
 	UserRequest userRequest();
 }
