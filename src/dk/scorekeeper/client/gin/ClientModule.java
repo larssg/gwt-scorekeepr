@@ -1,9 +1,7 @@
 package dk.scorekeeper.client.gin;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.gwtplatform.mvp.client.DefaultProxyFailureHandler;
 import com.gwtplatform.mvp.client.RootPresenter;
@@ -23,7 +21,6 @@ import dk.scorekeeper.client.views.MainPageView;
 import dk.scorekeeper.client.views.games.GamesView;
 import dk.scorekeeper.client.views.home.HomeView;
 import dk.scorekeeper.client.views.users.UsersView;
-import dk.scorekeeper.shared.requestfactory.ScoreKeeperRequestFactory;
 
 public class ClientModule extends AbstractPresenterModule {
 	@Override
@@ -54,13 +51,5 @@ public class ClientModule extends AbstractPresenterModule {
 
 		bindPresenter(GamesPresenter.class, GamesPresenter.MyView.class,
 				GamesView.class, GamesPresenter.MyProxy.class);
-	}
-
-	@Provides
-	@Singleton
-	ScoreKeeperRequestFactory provideScoreKeeperRequestFactory(EventBus eventBus) {
-		ScoreKeeperRequestFactory requestFactory = GWT.create(ScoreKeeperRequestFactory.class);
-		requestFactory.initialize(eventBus);
-		return requestFactory;
 	}
 }

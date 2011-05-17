@@ -14,7 +14,7 @@ import dk.scorekeeper.client.events.UserAddedEvent;
 import dk.scorekeeper.client.events.UserAddedEventHandler;
 import dk.scorekeeper.client.events.UsersLoadedEvent;
 import dk.scorekeeper.client.events.UsersLoadedEventHandler;
-import dk.scorekeeper.shared.domain.proxy.UserProxy;
+import dk.scorekeeper.shared.domain.User;
 
 public class UserListView extends Composite {
 
@@ -37,7 +37,7 @@ public class UserListView extends Composite {
 		bindEvents();
 	}
 
-	protected void addUser(UserProxy user) {
+	protected void addUser(User user) {
 		userDetailList.add(new UserDetailView(user));
 	}
 
@@ -58,9 +58,9 @@ public class UserListView extends Composite {
 		});
 	}
 
-	public void setUsers(List<UserProxy> users) {
+	public void setUsers(List<User> list) {
 		userDetailList.clear();
-		for (UserProxy user : users) {
+		for (User user : list) {
 			userDetailList.add(new UserDetailView(user));
 		}
 	}

@@ -6,10 +6,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import dk.scorekeeper.client.presenter.UsersPresenter.MyView;
-import dk.scorekeeper.shared.requestfactory.ScoreKeeperRequestFactory;
 
 public class UsersView extends ViewImpl implements MyView {
 
@@ -22,12 +22,12 @@ public class UsersView extends ViewImpl implements MyView {
 
 	private final Widget widget;
 
-	private final ScoreKeeperRequestFactory requestFactory;
+	private final DispatchAsync dispatcher;
 
 	@Inject
-	public UsersView(final EventBus eventBus, ScoreKeeperRequestFactory requestFactory) {
+	public UsersView(final EventBus eventBus, DispatchAsync dispatcher) {
 		this.eventBus = eventBus;
-		this.requestFactory = requestFactory;
+		this.dispatcher = dispatcher;
 
 		widget = uiBinder.createAndBindUi(this);
 	}
@@ -39,7 +39,7 @@ public class UsersView extends ViewImpl implements MyView {
 
 	@UiFactory
 	CreateUserView makeCreateUserView() {
-		return new CreateUserView(eventBus, requestFactory);
+		return new CreateUserView(eventBus, dispatcher);
 	}
 
 	@UiFactory

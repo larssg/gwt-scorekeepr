@@ -2,15 +2,15 @@ package dk.scorekeeper.client.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import dk.scorekeeper.shared.domain.proxy.UserProxy;
+import dk.scorekeeper.shared.domain.User;
 
 public class UserAddedEvent extends GwtEvent<UserAddedEventHandler> {
 
 	public static Type<UserAddedEventHandler> TYPE = new Type<UserAddedEventHandler>();
 
-	private final UserProxy user;
+	private final User user;
 
-	public UserAddedEvent(UserProxy user) {
+	public UserAddedEvent(User user) {
 		this.user = user;
 	}
 
@@ -24,7 +24,7 @@ public class UserAddedEvent extends GwtEvent<UserAddedEventHandler> {
 		return TYPE;
 	}
 
-	public UserProxy getUser() {
+	public User getUser() {
 		return user;
 	}
 

@@ -1,10 +1,9 @@
 package dk.scorekeeper.client.presenter;
 
-import java.util.List;
-
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
-import com.google.web.bindery.requestfactory.shared.Receiver;
+import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -14,8 +13,8 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import dk.scorekeeper.client.NameTokens;
 import dk.scorekeeper.client.events.UsersLoadedEvent;
-import dk.scorekeeper.shared.domain.proxy.UserProxy;
-import dk.scorekeeper.shared.requestfactory.ScoreKeeperRequestFactory;
+import dk.scorekeeper.shared.action.LoadUsersAction;
+import dk.scorekeeper.shared.action.LoadUsersResult;
 
 public class UsersPresenter extends Presenter<UsersPresenter.MyView, UsersPresenter.MyProxy> {
 	@ProxyCodeSplit
@@ -26,14 +25,29 @@ public class UsersPresenter extends Presenter<UsersPresenter.MyView, UsersPresen
 	public interface MyView extends View {
 	}
 
+	private final DispatchAsync dispatcher;
+	private final EventBus eventBus;
+
 	@Inject
-	public UsersPresenter(final EventBus eventBus, MyView view, MyProxy proxy, ScoreKeeperRequestFactory requestFactory) {
+	public UsersPresenter(final EventBus eventBus, MyView view, MyProxy proxy, DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
 
-		requestFactory.userRequest().listAll().fire(new Receiver<List<UserProxy>>() {
+		this.dispatcher = dispatcher;
+		this.eventBus = eventBus;
+	}
+
+	@Override
+	protected void onReset() {
+		super.onReset();
+
+		dispatcher.execute(new LoadUsersAction(), new AsyncCallback<LoadUsersResult>() {
 			@Override
-			public void onSuccess(List<UserProxy> users) {
-				UsersLoadedEvent event = new UsersLoadedEvent(users);
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(LoadUsersResult result) {
+				UsersLoadedEvent event = new UsersLoadedEvent(result.getUsers());
 				eventBus.fireEvent(event);
 			}
 		});

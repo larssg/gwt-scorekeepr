@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 
-import dk.scorekeeper.shared.domain.proxy.GameProxy;
+import dk.scorekeeper.shared.domain.Game;
 
 public class GameListView extends Composite {
 
@@ -25,9 +25,9 @@ public class GameListView extends Composite {
 	@UiField
 	FlowPanel panel;
 
-	private final CellTable<GameProxy> table = new CellTable<GameProxy>();
+	private final CellTable<Game> table = new CellTable<Game>();
 
-	private final ListDataProvider<GameProxy> dataProvider = new ListDataProvider<GameProxy>();
+	private final ListDataProvider<Game> dataProvider = new ListDataProvider<Game>();
 
 	public GameListView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -35,16 +35,16 @@ public class GameListView extends Composite {
 	}
 
 	private void initTable() {
-		TextColumn<GameProxy> idColumn = new TextColumn<GameProxy>() {
+		TextColumn<Game> idColumn = new TextColumn<Game>() {
 			@Override
-			public String getValue(GameProxy object) {
+			public String getValue(Game object) {
 				return object.getId().toString();
 			}
 		};
 
-		TextColumn<GameProxy> nameColumn = new TextColumn<GameProxy>() {
+		TextColumn<Game> nameColumn = new TextColumn<Game>() {
 			@Override
-			public String getValue(GameProxy object) {
+			public String getValue(Game object) {
 				return object.getName();
 			}
 		};
@@ -63,10 +63,10 @@ public class GameListView extends Composite {
 		panel.add(table);
 	}
 
-	public void setGames(List<GameProxy> games) {
-		List<GameProxy> list = dataProvider.getList();
+	public void setGames(List<Game> games) {
+		List<Game> list = dataProvider.getList();
 		list.clear();
-		for (GameProxy game : games) {
+		for (Game game : games) {
 			list.add(game);
 		}
 	}

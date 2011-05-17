@@ -4,15 +4,15 @@ import java.util.List;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import dk.scorekeeper.shared.domain.proxy.UserProxy;
+import dk.scorekeeper.shared.domain.User;
 
 public class UsersLoadedEvent extends GwtEvent<UsersLoadedEventHandler> {
 
 	public static Type<UsersLoadedEventHandler> TYPE = new Type<UsersLoadedEventHandler>();
 
-	private final List<UserProxy> users;
+	private final List<User> users;
 
-	public UsersLoadedEvent(List<UserProxy> users) {
+	public UsersLoadedEvent(List<User> users) {
 		this.users = users;
 	}
 
@@ -26,7 +26,7 @@ public class UsersLoadedEvent extends GwtEvent<UsersLoadedEventHandler> {
 		return TYPE;
 	}
 
-	public List<UserProxy> getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 }

@@ -12,12 +12,12 @@
 
   <!-- Other module inherits                                      -->
   <inherits name="com.google.gwt.resources.Resources" />
-  <inherits name='com.google.web.bindery.requestfactory.RequestFactory'/>
 
   <!-- Inherits for GWT Platform								  -->  
   <inherits name="com.google.gwt.uibinder.UiBinder" />
   <inherits name="com.google.gwt.inject.Inject" />
   <inherits name="com.gwtplatform.mvp.Mvp" /> 
+  <inherits name='com.gwtplatform.dispatch.Dispatch' />
 
   <define-configuration-property name="gin.ginjector" is-multi-valued="false" />
   <set-configuration-property name="gin.ginjector" value="dk.scorekeeper.client.gin.ClientGinjector" /> 
@@ -32,4 +32,8 @@
   <set-configuration-property name="UiBinder.useSafeHtmlTemplates" value="true" />
 
   <set-configuration-property name="CssResource.obfuscationPrefix" value="empty" />
+
+  <set-configuration-property name="gwt.elideTypeNamesFromRPC" value="true" />
+  
+  <set-property name="compiler.stackMode" value="strip"/>
 </module>

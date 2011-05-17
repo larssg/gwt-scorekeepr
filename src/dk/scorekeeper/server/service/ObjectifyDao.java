@@ -17,10 +17,10 @@ import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
 
-import dk.scorekeeper.server.domain.Game;
-import dk.scorekeeper.server.domain.Match;
-import dk.scorekeeper.server.domain.User;
 import dk.scorekeeper.shared.TooManyResultsException;
+import dk.scorekeeper.shared.domain.Game;
+import dk.scorekeeper.shared.domain.Match;
+import dk.scorekeeper.shared.domain.User;
 
 public class ObjectifyDao<T> extends DAOBase {
 	static {
@@ -207,7 +207,6 @@ public class ObjectifyDao<T> extends DAOBase {
 	}
 
 	public Key<T> put(T entity)
-
 	{
 		return ofy().put(entity);
 	}
@@ -215,5 +214,10 @@ public class ObjectifyDao<T> extends DAOBase {
 	public Map<Key<T>, T> putAll(Iterable<T> entities)
 	{
 		return ofy().put(entities);
+	}
+
+	public T saveAndReturn(T entity) {
+		put(entity);
+		return entity;
 	}
 }

@@ -11,14 +11,11 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.google.web.bindery.requestfactory.shared.Receiver;
-import com.google.web.bindery.requestfactory.shared.Request;
+import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import dk.scorekeeper.client.presenter.GamesPresenter.MyView;
-import dk.scorekeeper.shared.domain.proxy.GameProxy;
-import dk.scorekeeper.shared.requestfactory.GameRequest;
-import dk.scorekeeper.shared.requestfactory.ScoreKeeperRequestFactory;
+import dk.scorekeeper.shared.domain.Game;
 
 public class GamesView extends ViewImpl implements MyView {
 
@@ -38,12 +35,12 @@ public class GamesView extends ViewImpl implements MyView {
 
 	private final Widget widget;
 
-	private final ScoreKeeperRequestFactory requestFactory;
+	private final DispatchAsync dispatcher;
 
 	@Inject
-	public GamesView(final ScoreKeeperRequestFactory requestFactory) {
+	public GamesView(DispatchAsync dispatcher) {
 		widget = uiBinder.createAndBindUi(this);
-		this.requestFactory = requestFactory;
+		this.dispatcher = dispatcher;
 	}
 
 	@Override
@@ -57,25 +54,24 @@ public class GamesView extends ViewImpl implements MyView {
 
 	@UiHandler("saveButton")
 	void onSaveButtonClick(ClickEvent event) {
-		GameRequest request = requestFactory.gameRequest();
-		GameProxy game = request.create(GameProxy.class);
+		//		GameProxy game = request.create(GameProxy.class);
 
-		game.setName(name.getText());
-
-		saveButton.setEnabled(false);
-
-		Request<GameProxy> createReq = request.saveAndReturn(game);
-		createReq.fire(new Receiver<GameProxy>() {
-			@Override
-			public void onSuccess(GameProxy response) {
-				clear();
-				saveButton.setEnabled(true);
-			}
-		});
+		//		game.setName(name.getText());
+		//
+		//		saveButton.setEnabled(false);
+		//
+		//		Request<GameProxy> createReq = request.saveAndReturn(game);
+		//		createReq.fire(new Receiver<GameProxy>() {
+		//			@Override
+		//			public void onSuccess(GameProxy response) {
+		//				clear();
+		//				saveButton.setEnabled(true);
+		//			}
+		//		});
 	}
 
 	@Override
-	public void setGames(List<GameProxy> games) {
+	public void setGames(List<Game> games) {
 		listView.setGames(games);
 	}
 }

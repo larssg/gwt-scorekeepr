@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 
-import dk.scorekeeper.shared.domain.proxy.UserProxy;
+import dk.scorekeeper.shared.domain.User;
 
 public class UserDetailView extends Composite {
 
@@ -30,12 +30,12 @@ public class UserDetailView extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public UserDetailView(UserProxy user) {
+	public UserDetailView(User user) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setUser(user);
 	}
 
-	private void setUser(UserProxy user) {
+	private void setUser(User user) {
 		userNameLabel.setText(user.getUserName());
 		fullNameLabel.setText(user.getFullName());
 		emailLabel.setText(user.getEmail());

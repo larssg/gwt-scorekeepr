@@ -3,8 +3,9 @@ package dk.scorekeeper.client.presenter;
 import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
-import com.google.web.bindery.requestfactory.shared.Receiver;
+import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -13,8 +14,9 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import dk.scorekeeper.client.NameTokens;
-import dk.scorekeeper.shared.domain.proxy.GameProxy;
-import dk.scorekeeper.shared.requestfactory.ScoreKeeperRequestFactory;
+import dk.scorekeeper.shared.action.LoadGamesAction;
+import dk.scorekeeper.shared.action.LoadGamesResult;
+import dk.scorekeeper.shared.domain.Game;
 
 public class GamesPresenter extends Presenter<GamesPresenter.MyView, GamesPresenter.MyProxy> {
 	@ProxyCodeSplit
@@ -23,17 +25,32 @@ public class GamesPresenter extends Presenter<GamesPresenter.MyView, GamesPresen
 	}
 
 	public interface MyView extends View {
-		void setGames(List<GameProxy> games);
+		void setGames(List<Game> games);
 	}
 
+	private final DispatchAsync dispatcher;
+	private final MyView view;
+
 	@Inject
-	public GamesPresenter(EventBus eventBus, final MyView view, MyProxy proxy, ScoreKeeperRequestFactory requestFactory) {
+	public GamesPresenter(EventBus eventBus, final MyView view, MyProxy proxy, DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
 
-		requestFactory.gameRequest().listAll().fire(new Receiver<List<GameProxy>>() {
+		this.view = view;
+		this.dispatcher = dispatcher;
+	}
+
+	@Override
+	protected void onReset() {
+		super.onReset();
+
+		dispatcher.execute(new LoadGamesAction(), new AsyncCallback<LoadGamesResult>() {
 			@Override
-			public void onSuccess(List<GameProxy> games) {
-				view.setGames(games);
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(LoadGamesResult result) {
+				view.setGames(result.getGames());
 			}
 		});
 	}
