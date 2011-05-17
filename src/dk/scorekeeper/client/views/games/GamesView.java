@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -15,6 +16,8 @@ import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import dk.scorekeeper.client.presenter.GamesPresenter.MyView;
+import dk.scorekeeper.shared.action.SaveGameAction;
+import dk.scorekeeper.shared.action.SaveGameResult;
 import dk.scorekeeper.shared.domain.Game;
 
 public class GamesView extends ViewImpl implements MyView {
@@ -54,20 +57,21 @@ public class GamesView extends ViewImpl implements MyView {
 
 	@UiHandler("saveButton")
 	void onSaveButtonClick(ClickEvent event) {
-		//		GameProxy game = request.create(GameProxy.class);
+		Game game = new Game();
+		game.setName(name.getText());
 
-		//		game.setName(name.getText());
-		//
-		//		saveButton.setEnabled(false);
-		//
-		//		Request<GameProxy> createReq = request.saveAndReturn(game);
-		//		createReq.fire(new Receiver<GameProxy>() {
-		//			@Override
-		//			public void onSuccess(GameProxy response) {
-		//				clear();
-		//				saveButton.setEnabled(true);
-		//			}
-		//		});
+		saveButton.setEnabled(false);
+		dispatcher.execute(new SaveGameAction(game), new AsyncCallback<SaveGameResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(SaveGameResult result) {
+				clear();
+				saveButton.setEnabled(true);
+			}
+		});
 	}
 
 	@Override
