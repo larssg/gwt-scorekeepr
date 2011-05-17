@@ -1,5 +1,8 @@
 package dk.scorekeeper.client.presenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -15,8 +18,10 @@ import dk.scorekeeper.client.NameTokens;
 import dk.scorekeeper.client.events.UsersLoadedEvent;
 import dk.scorekeeper.shared.action.LoadUsersAction;
 import dk.scorekeeper.shared.action.LoadUsersResult;
+import dk.scorekeeper.shared.domain.User;
 
-public class UsersPresenter extends Presenter<UsersPresenter.MyView, UsersPresenter.MyProxy> {
+public class UsersPresenter extends
+		Presenter<UsersPresenter.MyView, UsersPresenter.MyProxy> {
 	@ProxyCodeSplit
 	@NameToken(NameTokens.usersPage)
 	public interface MyProxy extends ProxyPlace<UsersPresenter> {
@@ -28,8 +33,11 @@ public class UsersPresenter extends Presenter<UsersPresenter.MyView, UsersPresen
 	private final DispatchAsync dispatcher;
 	private final EventBus eventBus;
 
+	private List<User> users = new ArrayList<User>();
+
 	@Inject
-	public UsersPresenter(final EventBus eventBus, MyView view, MyProxy proxy, DispatchAsync dispatcher) {
+	public UsersPresenter(final EventBus eventBus, MyView view, MyProxy proxy,
+			DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
 
 		this.dispatcher = dispatcher;
@@ -40,21 +48,24 @@ public class UsersPresenter extends Presenter<UsersPresenter.MyView, UsersPresen
 	protected void onReset() {
 		super.onReset();
 
-		dispatcher.execute(new LoadUsersAction(), new AsyncCallback<LoadUsersResult>() {
-			@Override
-			public void onFailure(Throwable caught) {
-			}
+		dispatcher.execute(new LoadUsersAction(),
+				new AsyncCallback<LoadUsersResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
 
-			@Override
-			public void onSuccess(LoadUsersResult result) {
-				UsersLoadedEvent event = new UsersLoadedEvent(result.getUsers());
-				eventBus.fireEvent(event);
-			}
-		});
+					@Override
+					public void onSuccess(LoadUsersResult result) {
+						users = result.getUsers();
+						UsersLoadedEvent event = new UsersLoadedEvent(users);
+						eventBus.fireEvent(event);
+					}
+				});
 	}
 
 	@Override
 	protected void revealInParent() {
-		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
+		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent,
+				this);
 	}
 }

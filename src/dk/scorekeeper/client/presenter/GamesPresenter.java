@@ -1,5 +1,6 @@
 package dk.scorekeeper.client.presenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
@@ -14,11 +15,14 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import dk.scorekeeper.client.NameTokens;
+import dk.scorekeeper.client.events.GameAddedEvent;
+import dk.scorekeeper.client.events.GameAddedEventHandler;
 import dk.scorekeeper.shared.action.LoadGamesAction;
 import dk.scorekeeper.shared.action.LoadGamesResult;
 import dk.scorekeeper.shared.domain.Game;
 
-public class GamesPresenter extends Presenter<GamesPresenter.MyView, GamesPresenter.MyProxy> {
+public class GamesPresenter extends
+		Presenter<GamesPresenter.MyView, GamesPresenter.MyProxy> {
 	@ProxyCodeSplit
 	@NameToken(NameTokens.gamesPage)
 	public interface MyProxy extends ProxyPlace<GamesPresenter> {
@@ -30,11 +34,15 @@ public class GamesPresenter extends Presenter<GamesPresenter.MyView, GamesPresen
 
 	private final DispatchAsync dispatcher;
 	private final MyView view;
+	private List<Game> games = new ArrayList<Game>();
+	private final EventBus eventBus;
 
 	@Inject
-	public GamesPresenter(EventBus eventBus, final MyView view, MyProxy proxy, DispatchAsync dispatcher) {
+	public GamesPresenter(EventBus eventBus, final MyView view, MyProxy proxy,
+			DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
 
+		this.eventBus = eventBus;
 		this.view = view;
 		this.dispatcher = dispatcher;
 	}
@@ -43,20 +51,37 @@ public class GamesPresenter extends Presenter<GamesPresenter.MyView, GamesPresen
 	protected void onReset() {
 		super.onReset();
 
-		dispatcher.execute(new LoadGamesAction(), new AsyncCallback<LoadGamesResult>() {
-			@Override
-			public void onFailure(Throwable caught) {
-			}
+		dispatcher.execute(new LoadGamesAction(),
+				new AsyncCallback<LoadGamesResult>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
 
+					@Override
+					public void onSuccess(LoadGamesResult result) {
+						games = result.getGames();
+						view.setGames(games);
+					}
+				});
+	}
+
+	@Override
+	protected void onBind() {
+		super.onBind();
+
+		eventBus.addHandler(GameAddedEvent.TYPE, new GameAddedEventHandler() {
 			@Override
-			public void onSuccess(LoadGamesResult result) {
-				view.setGames(result.getGames());
+			public void onEvent(GameAddedEvent event) {
+				Game game = event.getGame();
+				games.add(game);
+				view.setGames(games);
 			}
 		});
 	}
 
 	@Override
 	protected void revealInParent() {
-		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
+		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent,
+				this);
 	}
 }

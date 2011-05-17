@@ -20,7 +20,7 @@ public class GameListView extends Composite {
 	}
 
 	private static GameListViewUiBinder uiBinder = GWT
-	.create(GameListViewUiBinder.class);
+			.create(GameListViewUiBinder.class);
 
 	@UiField
 	FlowPanel panel;
@@ -38,7 +38,11 @@ public class GameListView extends Composite {
 		TextColumn<Game> idColumn = new TextColumn<Game>() {
 			@Override
 			public String getValue(Game object) {
-				return object.getId().toString();
+				if (object.getId() != null) {
+					return object.getId().toString();
+				} else {
+					return "";
+				}
 			}
 		};
 
