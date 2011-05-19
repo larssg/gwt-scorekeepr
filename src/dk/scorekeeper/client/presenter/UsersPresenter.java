@@ -15,7 +15,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import dk.scorekeeper.client.NameTokens;
-import dk.scorekeeper.client.events.UsersLoadedEvent;
+import dk.scorekeeper.client.event.UsersLoadedEvent;
 import dk.scorekeeper.shared.action.LoadUsersAction;
 import dk.scorekeeper.shared.action.LoadUsersResult;
 import dk.scorekeeper.shared.domain.User;

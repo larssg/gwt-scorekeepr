@@ -10,10 +10,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import dk.scorekeeper.client.events.UserAddedEvent;
-import dk.scorekeeper.client.events.UserAddedEventHandler;
-import dk.scorekeeper.client.events.UsersLoadedEvent;
-import dk.scorekeeper.client.events.UsersLoadedEventHandler;
+import dk.scorekeeper.client.event.UserAddedEvent;
+import dk.scorekeeper.client.event.UserAddedEventHandler;
+import dk.scorekeeper.client.event.UsersLoadedEvent;
+import dk.scorekeeper.client.event.UsersLoadedEventHandler;
 import dk.scorekeeper.shared.domain.User;
 
 public class UserListView extends Composite {

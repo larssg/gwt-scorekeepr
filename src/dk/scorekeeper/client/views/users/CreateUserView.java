@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.client.DispatchAsync;
 
-import dk.scorekeeper.client.events.UserAddedEvent;
+import dk.scorekeeper.client.event.UserAddedEvent;
 import dk.scorekeeper.shared.action.SaveUserAction;
 import dk.scorekeeper.shared.action.SaveUserResult;
 import dk.scorekeeper.shared.domain.User;

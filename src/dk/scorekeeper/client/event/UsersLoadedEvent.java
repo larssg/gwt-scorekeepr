@@ -1,4 +1,4 @@
-package dk.scorekeeper.client.events;
+package dk.scorekeeper.client.event;
 
 import java.util.List;
 

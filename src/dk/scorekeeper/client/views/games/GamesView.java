@@ -16,7 +16,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-import dk.scorekeeper.client.events.GameAddedEvent;
+import dk.scorekeeper.client.event.GameAddedEvent;
 import dk.scorekeeper.client.presenter.GamesPresenter.MyView;
 import dk.scorekeeper.shared.action.SaveGameAction;
 import dk.scorekeeper.shared.action.SaveGameResult;
@@ -63,24 +63,23 @@ public class GamesView extends ViewImpl implements MyView {
 
 	@UiHandler("saveButton")
 	void onSaveButtonClick(ClickEvent event) {
-		Game game = new Game();
+		final Game game = new Game();
 		game.setName(name.getText());
 
-		eventBus.fireEvent(new GameAddedEvent(game));
-
 		saveButton.setEnabled(false);
-		dispatcher.execute(new SaveGameAction(game),
-				new AsyncCallback<SaveGameResult>() {
-					@Override
-					public void onFailure(Throwable caught) {
-					}
+		dispatcher.execute(new SaveGameAction(game), new AsyncCallback<SaveGameResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
 
-					@Override
-					public void onSuccess(SaveGameResult result) {
-						clear();
-						saveButton.setEnabled(true);
-					}
-				});
+			@Override
+			public void onSuccess(SaveGameResult result) {
+				eventBus.fireEvent(new GameAddedEvent(result.getGame()));
+
+				clear();
+				saveButton.setEnabled(true);
+			}
+		});
 	}
 
 	@Override
