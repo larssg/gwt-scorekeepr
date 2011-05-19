@@ -3,8 +3,13 @@
  */
 package dk.scorekeeper.client.views.users;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -12,12 +17,14 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.client.DispatchAsync;
 
+import dk.scorekeeper.client.KeyboardUtil;
 import dk.scorekeeper.client.event.UserAddedEvent;
 import dk.scorekeeper.shared.action.SaveUserAction;
 import dk.scorekeeper.shared.action.SaveUserResult;
@@ -56,12 +63,22 @@ public class CreateUserView extends Composite {
 
 	private final DispatchAsync dispatcher;
 
+	private final List<FocusWidget> widgets = new ArrayList<FocusWidget>();
+
 	@Inject
 	public CreateUserView(final EventBus eventBus, final DispatchAsync dispatcher) {
 		this.eventBus = eventBus;
 		this.dispatcher = dispatcher;
 
 		initWidget(uiBinder.createAndBindUi(this));
+
+		widgets.add(userName);
+		widgets.add(password);
+		widgets.add(passwordConfirmation);
+		widgets.add(email);
+		widgets.add(fullName);
+
+		onBind();
 	}
 
 	public void clear() {
@@ -72,8 +89,20 @@ public class CreateUserView extends Composite {
 		fullName.setText("");
 	}
 
-	@UiHandler("saveButton")
-	void onSaveButtonClick(ClickEvent event) {
+	private void onBind() {
+		for (FocusWidget widget : widgets) {
+			widget.addKeyPressHandler(new KeyPressHandler() {
+				@Override
+				public void onKeyPress(KeyPressEvent event) {
+					if (KeyboardUtil.enterKeyPressed(event)) {
+						onSave();
+					}
+				}
+			});
+		}
+	}
+
+	private void onSave() {
 		if (password.getText().equals(passwordConfirmation.getText())) {
 			User user = new User();
 
@@ -98,6 +127,18 @@ public class CreateUserView extends Composite {
 				}
 			});
 		}
+	}
 
+	@UiHandler("saveButton")
+	void onSaveButtonClick(ClickEvent event) {
+		onSave();
+	}
+
+	public void setEnabled(boolean enabled) {
+		for (FocusWidget widget : widgets) {
+			widget.setEnabled(enabled);
+		}
+
+		saveButton.setEnabled(enabled);
 	}
 }

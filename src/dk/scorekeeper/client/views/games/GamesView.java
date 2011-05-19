@@ -1,21 +1,26 @@
 package dk.scorekeeper.client.views.games;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.ViewImpl;
 
+import dk.scorekeeper.client.KeyboardUtil;
 import dk.scorekeeper.client.event.GameAddedEvent;
 import dk.scorekeeper.client.presenter.GamesPresenter.MyView;
 import dk.scorekeeper.shared.action.SaveGameAction;
@@ -27,8 +32,7 @@ public class GamesView extends ViewImpl implements MyView {
 	interface GamesViewUiBinder extends UiBinder<Widget, GamesView> {
 	}
 
-	private static GamesViewUiBinder uiBinder = GWT
-			.create(GamesViewUiBinder.class);
+	private static GamesViewUiBinder uiBinder = GWT.create(GamesViewUiBinder.class);
 
 	@UiField
 	TextBox name;
@@ -45,11 +49,18 @@ public class GamesView extends ViewImpl implements MyView {
 
 	private final EventBus eventBus;
 
+	private final List<FocusWidget> widgets = new ArrayList<FocusWidget>();
+
 	@Inject
 	public GamesView(EventBus eventBus, DispatchAsync dispatcher) {
-		widget = uiBinder.createAndBindUi(this);
 		this.eventBus = eventBus;
 		this.dispatcher = dispatcher;
+
+		widget = uiBinder.createAndBindUi(this);
+
+		widgets.add(name);
+
+		onBind();
 	}
 
 	@Override
@@ -61,25 +72,51 @@ public class GamesView extends ViewImpl implements MyView {
 		name.setText("");
 	}
 
-	@UiHandler("saveButton")
-	void onSaveButtonClick(ClickEvent event) {
+	private void onBind() {
+		for (FocusWidget widget : widgets) {
+			widget.addKeyPressHandler(new KeyPressHandler() {
+				@Override
+				public void onKeyPress(KeyPressEvent event) {
+					if (KeyboardUtil.enterKeyPressed(event)) {
+						onSave();
+					}
+				}
+			});
+		}
+	}
+
+	private void onSave() {
+		setEnabled(false);
+
 		final Game game = new Game();
 		game.setName(name.getText());
 
-		saveButton.setEnabled(false);
 		dispatcher.execute(new SaveGameAction(game), new AsyncCallback<SaveGameResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
+				setEnabled(true);
 			}
 
 			@Override
 			public void onSuccess(SaveGameResult result) {
 				eventBus.fireEvent(new GameAddedEvent(result.getGame()));
-
 				clear();
-				saveButton.setEnabled(true);
+				setEnabled(true);
 			}
 		});
+	}
+
+	@UiHandler("saveButton")
+	void onSaveButtonClick(ClickEvent event) {
+		onSave();
+	}
+
+	public void setEnabled(boolean enabled) {
+		for (FocusWidget widget : widgets) {
+			widget.setEnabled(enabled);
+		}
+
+		saveButton.setEnabled(enabled);
 	}
 
 	@Override
